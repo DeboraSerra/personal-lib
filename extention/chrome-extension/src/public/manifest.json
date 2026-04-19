@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "Book scraper",
+  "version": "1.0",
+  "description": "Find all book titles on an Amazon webpage",
+  "permissions": ["identity", "storage", "offscreen"],
+  "host_permissions": ["https://*.firebaseapp.com/*"],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Book scraper",
+    "default_icon": "icon.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["offscreen.html"],
+      "matches": ["https://*.amazon.ca/*"]
+    }
+  ],
+  "oauth2": {
+    "client_id": "822385203173-2t85r10f4qmv6j68tm79ds5beqflm8c1.apps.googleusercontent.com",
+    "scopes": ["openid", "email", "profile"]
+  }
+}
