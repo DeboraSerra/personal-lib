@@ -1,35 +1,44 @@
-document.addEventListener("DOMContentLoaded", function () {
-  const signInButton = document.getElementById("signInButton");
-  const signOutButton = document.getElementById("signOutButton");
-  const userInfo = document.getElementById("userInfo");
+const BASE_URL = "https://www.amazon.";
+const EXPECTED_URL = "/hz/mycd/digital-console/contentlist";
 
-  function updateUI(user) {
-    if (user) {
-      userInfo.textContent = `Signed in as: ${user.email}`;
-      signInButton.style.display = "none";
-      signOutButton.style.display = "block";
-    } else {
-      userInfo.textContent = "Not signed in";
-      signInButton.style.display = "block";
-      signOutButton.style.display = "none";
-    }
+const checkUrl = async () => {
+  const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
+  const currentTab = tabs[0];
+  const url = currentTab.url;
+  if (!url.startsWith(BASE_URL) || !url.includes(EXPECTED_URL)) {
+    alert("This extension only works on Amazon Kindle Content page.");
+    return false;
   }
+  return true;
+};
 
-  chrome.storage.local.get(["user"], function (result) {
-    updateUI(result.user);
-  });
+window.onload = () => {
+  const button = document.getElementById("start");
+  button.addEventListener("click", async function () {
+    if (!(await checkUrl())) return;
+    const pages = document.getElementById("pages").value;
+    const mapAmount = {
+      all: Infinity,
+      one: 1,
+      three: 3,
+      five: 5,
+    };
+    const pagesAmount = mapAmount[pages];
 
-  signInButton.addEventListener("click", function () {
-    chrome.runtime.sendMessage({ action: "signIn" }, function (response) {
-      if (response.user) {
-        updateUI(response.user);
-      }
+    // Get active tab and execute scraping in that tab's context
+    const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
+    const tabId = tabs[0].id;
+
+    // Inject the scraper.js file
+    await chrome.scripting.executeScript({
+      target: { tabId },
+      files: ["content/scraper.js"],
+    });
+
+    // Call scrapeBookTitles with the page amount
+    await chrome.tabs.sendMessage(tabId, {
+      action: "startScraping",
+      pagesAmount: pagesAmount,
     });
   });
-
-  signOutButton.addEventListener("click", function () {
-    chrome.runtime.sendMessage({ action: "signOut" }, function () {
-      updateUI(null);
-    });
-  });
-});
+};

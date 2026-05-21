@@ -4,10 +4,18 @@
     <title>Firebase Auth Extension</title>
   </head>
   <body>
-    <h1>Firebase Auth Extension</h1>
-    <div id="userInfo"></div>
-    <button id="signInButton">Sign In</button>
-    <button id="signOutButton" style="display: none">Sign Out</button>
-    <script src="popup.js"></script>
+     <div>
+      <h1>How far do you want to go?</h1>
+      <div>
+        <select id="pages">
+          <option value="one">One page</option>
+          <option value="three">Three pages</option>
+          <option value="five">Five pages</option>
+          <option value="all">All pages</option>
+        </select>
+        <button id="start">Start</button>
+      </div>
+      <script src="./popup.js"></script>
+    </div>
   </body>
 </html>
