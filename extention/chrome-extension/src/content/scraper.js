@@ -15,7 +15,8 @@ const downloadJSON = async (data) => {
     const a = document.createElement("a");
     a.href = url;
     a.download = "books.json";
-    const fileHash = await crypto.subtle.digest("SHA-256", blob);
+    const arrayBuffer = await blob.arrayBuffer();
+    const fileHash = await crypto.subtle.digest("SHA-256", arrayBuffer);
     console.log("File hash: ", fileHash);
     document.body.appendChild(a);
     a.click();
@@ -31,7 +32,6 @@ const moveToNextPage = async () => {
   const pagination = document.querySelector(".pagination");
   const page = pagination.querySelector(".page-item.active");
   const nextPage = page.nextElementSibling;
-  console.log({ pagination, page, nextPage });
   if (nextPage) {
     nextPage.click();
     await wait(3000);
@@ -79,7 +79,6 @@ const scrapeBookTitles = async (pagesAmount) => {
   if (globalThis.location.href.includes("pdocs"))
     return scrapeDocTitles(bookRows, pagesAmount);
   bookRows.forEach((row) => {
-    console.log("scraping row: ", row);
     const img = row.querySelector("img");
     const title = row.querySelector(".digital_entity_title").innerText;
     const author = row.querySelector(".information_row").innerText;
