@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "Book scraper",
+  "version": "1.0",
+  "description": "Find all book titles on an Amazon webpage",
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Book scraper",
+    "default_icon": "icon.png"
+  },
+  "permissions": ["tabs", "scripting"],
+  "host_permissions": [
+    "*://*.amazon.ca/*",
+    "*://*.amazon.com/*",
+    "*://*.amazon."
+  ]
+}

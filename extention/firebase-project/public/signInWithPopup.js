@@ -28,3 +28,21 @@ window.addEventListener("message", function ({ data }) {
     signInWithPopup(auth, PROVIDER).then(sendResponse).catch(sendResponse);
   }
 });
+
+const googleLogin = async () => {
+  try {
+    if (typeof firebase === "undefined" || !firebase.auth) {
+      throw new Error("Firebase not initialized");
+    }
+
+    const provider = new firebase.auth.GoogleAuthProvider();
+    provider.addScope("email");
+
+    const result = await firebase.auth().signInWithPopup(provider);
+    console.log("Logging sucessfully", result.user);
+    return true;
+  } catch (error) {
+    console.error("Error during Google login:", error);
+    return false;
+  }
+};

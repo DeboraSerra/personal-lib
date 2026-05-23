@@ -2,10 +2,70 @@
 <html lang="en">
   <head>
     <title>Firebase Auth for Chrome Extension</title>
+    <style>
+      .title {
+        font-size: 24px;
+        font-weight: bold;
+        text-align: center;
+        margin: 0 0 16px;
+      }
+      form {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        max-width: 500px;
+        margin: 0 auto;
+      }
+      input {
+        width: 100%;
+        padding: 10px;
+        margin: 8px 0;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      button {
+        padding: 10px;
+        margin: 8px 0;
+        width: 100%;
+        border: 1px solid #999;
+        background-color: #356ee0;
+        color: #fff;
+        cursor: pointer;
+        border-radius: 8px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+      }
+      button:hover {
+        opacity: 70%;
+      }
+      button:active {
+        opacity: 100%;
+      }
+      button.cancel {
+        background-color: #a20100;
+      }
+    </style>
   </head>
   <body>
-    <h1>Firebase Auth for Chrome Extension</h1>
+    <h2 class="title">Please log in to continue</h2>
+    <form action="">
+      <input type="email" name="email" placeholder="Email" />
+      <input type="password" name="password" placeholder="Password" />
+      <button type="submit">Login</button>
+      <button type="button">
+        Login with
+        <img
+          src="./Google_logo.png"
+          alt="Google"
+          width="16"
+          height="16"
+        />
+      </button>
+      <button type="button" class="cancel">Cancel</button>
+    </form>
     <script type="module" src="signInWithPopup.js"></script>
   </body>
 </html>
-signInWithPopup.js
