@@ -1,9 +1,7 @@
-import { PrismaClient } from "@/generated/prisma/client";
+import { prisma } from "@/lib/prisma";
 import genres from "../assets/lists/genres";
 import statuses from "../assets/lists/status";
 import tropes from "../assets/lists/tropes";
-
-const prisma = new PrismaClient();
 
 async function main() {
   for (const status of statuses) {
